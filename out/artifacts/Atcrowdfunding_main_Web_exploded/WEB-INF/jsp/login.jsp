@@ -32,19 +32,18 @@
 </nav>
 
 <div class="container">
-        ${exception.message}
     <form id="loginForm" action="${APP_PATH}/doLogin.do" method="post" class="form-signin" role="form">
         <h2 class="form-signin-heading"><i class="glyphicon glyphicon-log-in"></i> 用户登录</h2>
         <div class="form-group has-success has-feedback">
-            <input type="text" class="form-control" id="inputSuccess4" value="lisi" name="loginacct" placeholder="请输入登录账号" autofocus>
+            <input type="text" class="form-control" id="floginacct" value="lisi" name="loginacct" placeholder="请输入登录账号" autofocus>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-success has-feedback">
-            <input type="password" class="form-control" id="inputSuccess4" value="123" name="userpswd" placeholder="请输入登录密码" style="margin-top:10px;">
+            <input type="password" class="form-control" id="fuserpswd" value="123" name="userpswd" placeholder="请输入登录密码" style="margin-top:10px;">        ${exception.message}
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="form-group has-success has-feedback">
-            <select class="form-control" name="type" >
+            <select class="form-control" id="ftype" name="type" >
                 <option value="member">会员</option>
                 <option value="user" selected>管理</option>
             </select>
@@ -68,7 +67,48 @@
 <script src="${APP_PATH}/bootstrap/js/bootstrap.min.js"></script>
 <script>
     function dologin() {
-        $("#loginForm").submit();
+
+        var floginacct = $("#floginacct");
+        var fuserpswd = $("#fuserpswd");
+        var ftype = $("#ftype");
+
+        if($.trim(floginacct.val())==""&&){
+            floginacct.val("");
+            alert("用户账号不能为空");
+            floginacct.focus();
+            return false;
+        }
+        if(fuserpswd.val()==""){
+            alert("用户账号不能为空");
+            fuserpswd.focus();
+            return false;
+        }
+        $.ajax({
+            type:"post",
+            data: {
+                "loginacct":floginacct.val(),
+                "userpswd":fuserpswd.val(),
+                "type":ftype.val(),
+            },
+            url: "${APP_PATH}/doLogin.do",
+            beforeSend:function(){
+                //一般做表单数据校验
+                return true;
+            },
+            success: function(result){//{“success”:true}//{"success":false,"message":"登录失败"}
+                if(result.success){
+                    alert("ok");
+                }else {
+                    alert("no ok")
+                }
+            },
+            error:function () {
+                alert("error");
+            }
+        })
+
+
+        // $("#loginForm").submit();
         // var type = $(":selected").val();
         // if ( type == "user" ) {
         //     window.location.href = "main.html";
