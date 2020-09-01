@@ -81,8 +81,11 @@ public class DispatcherController {
 
 
 
-
-
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();//销毁session对象或清理session域
+        return "redirect:/index.html";
+    }
 
     @RequestMapping("/index")
     public String index(){
