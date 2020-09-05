@@ -139,22 +139,22 @@
             <div class="panel panel-default">
                 <div class="panel-heading">表单数据<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
                 <div class="panel-body">
-                    <form role="form">
+                    <form id="editForm">
                         <div class="form-group">
                             <label for="exampleInputPassword1">登陆账号</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" value="test">
+                            <input type="text" class="form-control" id="floginacct" value="${user.loginacct}">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">用户名称</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" value="测试用户">
+                            <input type="text" class="form-control" id="fusername" value="${user.username}">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">邮箱地址</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" value="xxxx@xxxx.com">
+                            <input type="email" class="form-control" id="femail" value="${user.email}">
                             <p class="help-block label label-warning">请输入合法的邮箱地址, 格式为： xxxx@xxxx.com</p>
                         </div>
-                        <button type="button" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i> 修改</button>
-                        <button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
+                        <button id="updateBtn" type="button" class="btn btn-success"><i class="glyphicon glyphicon-edit"></i> 修改</button>
+                        <button type="button" id="resetBtn" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> 重置</button>
                     </form>
                 </div>
             </div>
@@ -203,6 +203,43 @@
             }
         });
     });
+
+    $("#resetBtn").click(function () {
+        $("#editForm")[0].reset();
+    });
+
+
+    $("#updateBtn").click(function (){
+
+        var floginacct = $("#floginacct");
+        var fusername = $("#fusername");
+        var femail = $("#femail");
+
+        $.ajax({
+            type:"POST",
+            data : {
+                "loginacct" : floginacct.val(),
+                "username" : fusername.val(),
+                "email" : femail.val(),
+                "id":"${user.id}"
+            },
+            url: "${APP_PATH}/user/doUpdate.do",
+            sendBefore:function(){
+                return true ;
+            },
+            success:function (result) {
+                if(result.success){
+                    window.location.href="${APP_PATH}/user/toIndex.html";
+                }else{
+                    layer.msg("修改用户失败", {time:1000, icon:5, shift:6});
+                }
+            },
+            error: function(){
+                layer.msg("保存失败", {time:1000, icon:5, shift:6});
+            }
+        });
+    });
+
 </script>
 </body>
 </html>

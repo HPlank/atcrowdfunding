@@ -8,7 +8,6 @@ import com.atguigu.atcrowdfunding.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -198,7 +197,7 @@ public class DispatcherController {
 
     @RequestMapping("/add")
     public String add(){
-        return "add";
+        return "user/add";
     }
     @RequestMapping("/apply")
     public String apply(){
@@ -230,7 +229,7 @@ public class DispatcherController {
 
     @RequestMapping("/edit")
     public String edit(){
-        return "edit";
+        return "user/edit";
     }
 
     @RequestMapping("/minecrowdfunding")

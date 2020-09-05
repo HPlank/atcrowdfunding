@@ -101,7 +101,7 @@
                 layer.close(loadingIndex);
                 if(result.success){
                     //跳转主页面.
-                    window.location.href="${APP_PATH}/main.htm";
+                    window.location.href="${APP_PATH}/main.html";
                 }else{
                     layer.msg(result.message, {time:1000, icon:5, shift:6});
                 }
