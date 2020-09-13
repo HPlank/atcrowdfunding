@@ -2,22 +2,23 @@ package com.atguigu.atcrowdfunding.util;
 
 import java.util.List;
 
-public class Page {
+public class Page<T> {
+
     private Integer pageno;
     private Integer pagesize;
-    private List data;
+    private List<T> data;
     private Integer totalsize;
     private Integer totalno;
 
     public Page(Integer pageno, Integer pagesize) {
-        if(pageno<=0){
+        if (pageno <= 0) {
             this.pageno = 1;
-        }else {
+        } else {
             this.pageno = pageno;
         }
-        if(pagesize<=0){
-            this.pagesize = 1;
-        }else {
+        if (pagesize <= 0) {
+            this.pagesize = 10;
+        } else {
             this.pagesize = pagesize;
         }
     }
@@ -52,7 +53,7 @@ public class Page {
 
     public void setTotalsize(Integer totalsize) {
         this.totalsize = totalsize;
-        this.totalno = (totalsize%pagesize)==0?(totalsize/pagesize):(totalsize/pagesize + 1);
+        this.totalno = (totalsize % pagesize) == 0 ? (totalsize / pagesize) : (totalsize / pagesize + 1);
     }
 
     public Integer getTotalno() {
@@ -63,8 +64,8 @@ public class Page {
         this.totalno = totalno;
     }
 
-    public Integer getStartIndex(){
-        return (this.pageno-1)*pagesize;
+    public Integer getStartIndex() {
+        return (this.pageno - 1) * pagesize;
     }
 
 }

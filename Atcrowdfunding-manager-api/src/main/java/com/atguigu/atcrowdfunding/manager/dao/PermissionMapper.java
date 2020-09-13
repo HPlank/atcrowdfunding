@@ -10,7 +10,13 @@ public interface PermissionMapper {
 
     Permission selectByPrimaryKey(Integer id);
 
-    List<Permission> selectAll();
+    List<Permission> queryAllPermission();
 
     int updateByPrimaryKey(Permission record);
+
+    Permission getRootPermission();
+
+    List<Permission> getChildrenPremissionById(Integer id);
+
+    List<Integer> queryPermissionByRoleid(Integer roleId);
 }

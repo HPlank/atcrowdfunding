@@ -7,6 +7,7 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="icon" property="icon" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
+
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_permission
@@ -20,8 +21,8 @@
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.atguigu.atcrowdfunding.bean.Permission" >
     update t_permission
-    set pid = #{pid,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
+    set
+     name = #{name,jdbcType=VARCHAR},
       icon = #{icon,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
@@ -31,8 +32,27 @@
     from t_permission
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap" >
+  <select id="queryAllPermission" resultMap="BaseResultMap" >
     select id, pid, name, icon, url
     from t_permission
   </select>
+
+
+    <select id="getRootPermission" resultType="Permission">
+         select id, pid, name, icon, url
+         from t_permission
+          where pid is null
+    </select>
+
+    <select id="getChildrenPremissionById" parameterType="int" resultMap="BaseResultMap">
+        select id, pid, name, icon, url
+         from t_permission
+          where pid = #{id}
+    </select>
+
+    <select id="queryPermissionByRoleid" parameterType="int" resultType="int">
+        select permissionid
+        from t_role_permission
+        where roleid = #{roleid}
+    </select>
 </mapper>

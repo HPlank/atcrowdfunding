@@ -1,5 +1,7 @@
 package com.atguigu.atcrowdfunding.manager.service.impl;
 
+import com.atguigu.atcrowdfunding.bean.Permission;
+import com.atguigu.atcrowdfunding.bean.Role;
 import com.atguigu.atcrowdfunding.bean.User;
 import com.atguigu.atcrowdfunding.execption.LoginFailExecption;
 import com.atguigu.atcrowdfunding.manager.dao.UserMapper;
@@ -9,6 +11,7 @@ import com.atguigu.atcrowdfunding.util.MD5Util;
 import com.atguigu.atcrowdfunding.util.Page;
 
 
+import com.atguigu.atcrowdfunding.vo.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -95,4 +98,49 @@ public class UserServiceImpl implements UserService {
     public int updateUser(User user) {
         return userMapper.updateByPrimaryKey(user);
     }
+
+    public int deleteUser(Integer id) {
+        return userMapper.deleteByPrimaryKey(id);
+    }
+
+    public int deleteBatchUser(Integer[] ids) {
+        int totalCont = 0;
+        for (Integer id:ids){
+            int count = userMapper.deleteByPrimaryKey(id);
+            totalCont += count;
+        }
+        if(totalCont!=ids.length){
+            throw new RuntimeException("批量删除失败！");
+        }
+        return totalCont;
+    }
+
+//    public int deleteBatchUserByVO(Data data) {
+//        return userMapper.deleteBatchUserByVO(data);
+//    }
+
+    public int deleteBatchUserByVO(Data data) {
+        return userMapper.deleteBatchUserByVO(data.getDatas());
+    }
+
+    public List<Role> queryAllRole() {
+        return userMapper.queryAllRole();
+    }
+
+    public List<Integer> queryRoleById(Integer id) {
+        return userMapper.queryRoleById(id);
+    }
+
+    public int saveUserRoleRelationship(Integer userid, Data data) {
+        return userMapper.saveUserRoleRelationship(userid,data);
+    }
+
+    public int deleteUserRoleRelationship(Integer userid, Data data) {
+        return userMapper.deleteUserRoleRelationship(userid,data);
+    }
+
+    public List<Permission> queryPermissionByUserid(Integer id) {
+        return userMapper.queryPermissionByUserid(id);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.atguigu.atcrowdfunding.controller;
 
+import com.atguigu.atcrowdfunding.bean.Permission;
 import com.atguigu.atcrowdfunding.bean.User;
 import com.atguigu.atcrowdfunding.manager.service.UserService;
 import com.atguigu.atcrowdfunding.util.AjaxResult;
@@ -11,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class DispatcherController {
@@ -71,19 +71,10 @@ public class DispatcherController {
 
 
 
-
-
-
-
-
-
-
-
-
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();//销毁session对象或清理session域
-        return "redirect:/index.html";
+        return "redirect:/index.htm";
     }
 
     @RequestMapping("/index")
@@ -102,7 +93,35 @@ public class DispatcherController {
     }
 
     @RequestMapping("/main")
-    public String main(){
+    public String main(HttpSession session){
+
+//        List<Permission> root = new ArrayList<Permission>();
+//
+//        //加载当前登录用户的权限
+//        User user = (User)session.getAttribute(Const.LOGIN_USER);
+//
+//        List<Permission> mypermissions = userService.queryPermissionByUserid(user.getId());
+//
+//        Map<Integer,Permission> map = new HashMap<Integer, Permission>();
+//
+//        for (Permission permission : mypermissions) {
+//            map.put(permission.getId(),permission);
+//        }
+//
+//        for (Permission child: mypermissions
+//             ) {
+//            if(child.getPid()==null){
+//                root.add(child);
+//            }else {
+//                Permission parent = map.get(child.getPid());
+//                parent.getChildren().add(child);
+//            }
+//        }
+//
+//        Permission permissionRoot = null;
+//
+//        session.setAttribute("permissionRoot",permissionRoot);
+
         return "main";
     }
 
@@ -113,7 +132,7 @@ public class DispatcherController {
 
     @RequestMapping("/role")
     public String role(){
-        return "role";
+        return "index";
     }
 
     @RequestMapping("/user")
@@ -123,22 +142,22 @@ public class DispatcherController {
 
     @RequestMapping("/permission")
     public String permission(){
-        return "permission";
+        return "role/permission";
     }
 
     @RequestMapping("/auth_cert")
     public String auth_cert(){
-        return "auth_cert";
+        return "auth/auth_cert";
     }
 
     @RequestMapping("/auth_adv")
     public String auth_adv(){
-        return "auth_adv";
+        return "auth/auth_adv";
     }
 
     @RequestMapping("/auth_project")
     public String auth_project(){
-        return "auth_project";
+        return "auth/auth_project";
     }
 
     @RequestMapping("/cert")
@@ -219,12 +238,12 @@ public class DispatcherController {
 
     @RequestMapping("/assignPermission")
     public String assignPermission(){
-        return "assignPermission";
+        return "role/assignPermission";
     }
 
     @RequestMapping("/assignRole")
     public String assignRole(){
-        return "assignRole";
+        return "user/assignRole";
     }
 
     @RequestMapping("/edit")
